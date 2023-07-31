@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Student Result Management System By Divyansh Raghuwanshi</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-image: url("bckgrd.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      h1 {
+        text-align: center;
+        font-family: "Helvetica", sans-serif;
+        color: yellow;
+      }
+
+      form {
+        max-width: 400px;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      form label,
+      form input {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      form input[type="text"],
+      form input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      form button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 8px 16px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: #fff;
+      }
+
+      .table-container {
+        max-width: 800px;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      #resultTable {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      #resultTable th,
+      #resultTable td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: center;
+      }
+
+      .edit-button {
+        background-color: #2196f3;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .edit-button:hover {
+        background-color: #0c7cd5;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Student Result Management System</h1>
+
+    <form id="resultForm">
+      <label for="name">Student Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="roll">Roll Number:</label>
+      <input type="text" id="roll" name="roll" required />
+
+      <label for="oops">oops Marks:</label>
+      <input
+        type="number"
+        id="oops"
+        name="oops"
+        min="0"
+        max="100"
+        required
+      />
+
+      <label for="dbms">dbms Marks:</label>
+      <input
+        type="number"
+        id="dbms"
+        name="dbms"
+        min="0"
+        max="100"
+        required
+      />
+
+      <label for="networks">networks Marks:</label>
+      <input
+        type="number"
+        id="networks"
+        name="networks"
+        min="0"
+        max="100"
+        required
+      />
+
+      <button type="submit">Add Result</button>
+    </form>
+
+    <div class="table-container">
+      <table id="resultTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>OOPS Marks</th>
+            <th>DBMS Marks</th>
+            <th>NETWORKS Marks</th>
+            <th>Total</th>
+            <th>Percentage</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Result data will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      const resultForm = document.getElementById("resultForm");
+      const resultTable = document.getElementById("resultTable");
+      const tbody = resultTable.querySelector("tbody");
+
+      resultForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const nameInput = document.getElementById("name");
+        const rollInput = document.getElementById("roll");
+        const oopsInput = document.getElementById("oops");
+        const dbmsInput = document.getElementById("dbms");
+        const networksInput = document.getElementById("networks");
+
+        const name = nameInput.value;
+        const roll = rollInput.value;
+        const oops = oopsInput.value;
+        const dbms = dbmsInput.value;
+        const networks = networksInput.value;
+
+        const total =
+          parseInt(oops) + parseInt(dbms) + parseInt(networks);
+        const percentage = ((total / 300) * 100).toFixed(2);
+
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${roll}</td>
+        <td>${oops}</td>
+        <td>${dbms}</td>
+        <td>${networks}</td>
+        <td>${total}</td>
+        <td>${percentage}%</td>
+        <td>
+          <button class="edit-button" onclick="editResult(this)">Edit</button>
+        </td>
+      `;
+
+        tbody.appendChild(newRow);
+
+        nameInput.value = "";
+        rollInput.value = "";
+        oopsInput.value = "";
+        dbmsInput.value = "";
+        networksInput.value = "";
+      });
+
+      function editResult(button) {
+        const row = button.parentNode.parentNode;
+        const cells = row.querySelectorAll("td");
+
+        const name = cells[0].textContent;
+        const roll = cells[1].textContent;
+        const oops = cells[2].textContent;
+        const dbms = cells[3].textContent;
+        const networks = cells[4].textContent;
+
+        const nameInput = document.getElementById("name");
+        const rollInput = document.getElementById("roll");
+        const oopsInput = document.getElementById("oops");
+        const dbmsInput = document.getElementById("dbms");
+        const networksInput = document.getElementById("networks");
+
+        nameInput.value = name;
+        rollInput.value = roll;
+        oopsInput.value = oops;
+        dbmsInput.value = dbms;
+        networksInput.value = networks;
+
+        row.remove();
+      }
+    </script>
+  </body>
+</html>
+		
+		
+		
+		
+
+  
